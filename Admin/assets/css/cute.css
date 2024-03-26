@@ -1,0 +1,441 @@
+
+
+@media (max-width: 768px) {
+}   
+body{
+background: #F0F0D8!important;
+}
+.cute{
+      position: relative;
+      left: auto;
+}
+.table {
+      width: 60%;
+      margin: auto;
+      margin-top: 20px;
+      border-radius: 20px;
+      padding: 2rem;
+}
+.table>:not(caption)>*>* {
+      padding: 1.2rem 0.5rem;
+      border-radius: 2px;
+      color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
+      background-color: var(--bs-table-bg);
+      border-bottom-width: var(--bs-border-width);
+      box-shadow: inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
+}
+.row{
+border-radius: 50px;
+}
+
+.card{
+      width: 60%;
+      margin: auto;
+      margin-top: 100px;
+      height: auto;
+      border-radius: 20px!important;
+    
+}
+.value {
+font-size: 20px;
+background-color: transparent;
+border: none;
+padding: 20px;
+color: white;
+position: relative;
+gap: 10px;
+cursor: pointer;
+border-radius: 10px;
+transition: 1s;
+box-sizing: border-box;
+align-items: center; /* Align items vertically in the center */
+}
+
+/* Adjust margins to create space between the buttons if needed */
+.value + .value {
+margin-top: 10px; /* Example spacing */
+}
+
+.value:not(:active):hover,
+.value:focus {
+box-sizing: border-box;
+border: 2px solid #1a1f24;
+color: #637185;
+}
+
+.value:focus,
+.value:active {
+background-color: #1a1f24;
+outline: none;
+margin-left: 17px;
+}
+
+.value::before {
+content: "";
+position: absolute;
+top: 5px;
+left: -15px;
+width: 5px;
+height: 80%;
+background-color: #2f81f7;
+border-radius: 5px;
+opacity: 0;
+transition: 1s;
+}
+
+.value:focus::before,
+.value:active::before {
+opacity: 1;
+}
+
+.value svg {
+width: 20px;
+}
+
+.input:hover > :not(.value:hover) {
+transition: 300ms;
+filter: blur(1.5px);
+transform: scale(0.95, 0.95);
+}
+
+
+.hamburger {
+height: 50px;
+width: 50px;
+transform: 0.2s;
+position: relative;
+}
+.hamburger .checkbox {
+position: absolute;
+opacity: 0;
+height: 100%;
+width: 100%;
+cursor: pointer;
+}
+.line {
+transition: 0.5s;
+stroke-width: 6px;
+stroke: black;
+}
+.lineTop {
+stroke-dasharray: 40 40;
+stroke-dashoffset: 25;
+}
+.lineBottom {
+stroke-dasharray: 40 40;
+stroke-dashoffset: 60;
+}
+.lineMid {
+stroke-dasharray: 40 40;
+}
+.hamburger .checkbox:checked + svg .line {
+stroke: crimson;
+}
+.hamburger .checkbox:checked + svg .lineTop {
+stroke-dashoffset: 0;
+transform-origin: left;
+transform: rotateZ(45deg) translate(-7px, -5px);
+}
+.hamburger .checkbox:checked + svg .lineMid {
+stroke-dashoffset: 40;
+}
+.hamburger .checkbox:checked + svg .lineBottom {
+stroke-dashoffset: 0;
+transform-origin: left;
+transform: rotateZ(-45deg) translate(-5px, 5px);
+}
+.close {
+position: absolute;
+top: 10px;
+right: 10px;
+color: #fff;
+font-size: 20px;
+cursor: pointer;
+}
+
+.toggle-img {
+width: 50px; 
+height: 50px;
+}
+
+/* hamburger menu for sidebar */
+
+.sidebar{
+position: absolute;
+background-color: rgb(16, 31, 159);
+width: 50px;
+height: 1000px!important;
+top: 0;
+}
+.offcanvas{
+max-width: 20%;
+}
+.offcanvas-backdrop {
+background-color: transparent !important;
+}
+.offcanvas-body{
+background:  rgb(16, 31, 159);
+background-color: rgb(16, 31, 159);
+}
+/* .offcanvas-header{
+background:  rgb(16, 31, 159);
+background-color: rgb(16, 31, 159);
+} */
+
+.hamburger {
+cursor: pointer;
+
+}
+.hamburger input {
+display: none;
+}
+
+.hamburger svg {
+/* The size of the SVG defines the overall size */
+height: 3em;
+/* Define the transition for transforming the SVG */
+transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line {
+fill: none;
+stroke: rgb(255, 255, 255);
+stroke-linecap: round;
+stroke-linejoin: round;
+stroke-width: 3;
+/* Define the transition for transforming the Stroke */
+transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+            stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-top-bottom {
+stroke-dasharray: 12 63;
+}
+
+.hamburger input:checked + svg {
+transform: rotate(-45deg);
+}
+
+.hamburger input:checked + svg .line-top-bottom {
+stroke-dasharray: 20 300;
+stroke-dashoffset: -32.42;
+}
+
+@media (max-width: 768px) {
+}   
+
+.close {
+position: absolute;
+top: 10px;
+right: 10px;
+color: #fff;
+font-size: 20px;
+cursor: pointer;
+}
+
+.sidebar{
+position: absolute;
+background-color: rgb(11, 11, 12);
+width: 50px;
+height: 100vh;
+top: 0;
+}
+.offcanvas-backdrop {
+background-color: transparent !important;
+}
+.offcanvas-body{
+background:  rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+color: #fff;
+}
+
+.hamburger {
+cursor: pointer;
+
+}
+
+.hamburger input {
+display: none;
+}
+
+.hamburger svg {
+/* The size of the SVG defines the overall size */
+height: 3em;
+/* Define the transition for transforming the SVG */
+transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line {
+fill: none;
+stroke: rgb(255, 255, 255);
+stroke-linecap: round;
+stroke-linejoin: round;
+stroke-width: 3;
+/* Define the transition for transforming the Stroke */
+transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-top-bottom {
+stroke-dasharray: 12 63;
+}
+
+.hamburger input:checked + svg {
+transform: rotate(-45deg);
+}
+
+.hamburger input:checked + svg .line-top-bottom {
+stroke-dasharray: 20 300;
+stroke-dashoffset: -32.42;
+}
+
+
+button {
+border: none;
+background: none;
+padding: 0;
+margin: 0;
+cursor: pointer;
+font-family: inherit;
+margin-left: auto;
+}
+.menu__icon {
+width: 32px;
+height: 32px;
+padding: 4px;
+}
+
+.menu__icon span {
+display: block;
+width: 100%;
+height: 0.125rem;
+border-radius: 2px;
+background-color: rgb(0, 0, 0);
+box-shadow: 0 .5px 2px 0 hsla(0, 0%, 0%, .2);
+transition: background-color .4s;
+position: relative;
+}
+
+.menu__icon span+span {
+margin-top: .375rem;
+}
+
+.menu__icon span:nth-child(1) {
+animation: ease .8s menu-icon-top-2 forwards;
+}
+
+.menu__icon span:nth-child(2) {
+animation: ease .8s menu-icon-scaled-2 forwards;
+}
+
+.menu__icon span:nth-child(3) {
+animation: ease .8s menu-icon-bottom-2 forwards;
+}
+
+.menu__icon:hover span:nth-child(1) {
+animation: ease .8s menu-icon-top forwards;
+}
+
+.menu__icon:hover span:nth-child(2) {
+animation: ease .8s menu-icon-scaled forwards;
+}
+
+.menu__icon:hover span:nth-child(3) {
+animation: ease .8s menu-icon-bottom forwards;
+background-color: rgb(255, 59, 48);
+}
+
+@keyframes menu-icon-top {
+0% {
+top: 0;
+transform: rotate(0);
+}
+
+50% {
+top: .5rem;
+transform: rotate(0);
+}
+
+100% {
+top: .5rem;
+transform: rotate(45deg);
+}
+}
+
+@keyframes menu-icon-top-2 {
+0% {
+top: .5rem;
+transform: rotate(45deg);
+}
+
+50% {
+top: .5rem;
+transform: rotate(0);
+}
+
+100% {
+top: 0;
+transform: rotate(0);
+}
+}
+
+@keyframes menu-icon-bottom {
+0% {
+bottom: 0;
+transform: rotate(0);
+}
+
+50% {
+bottom: .5rem;
+transform: rotate(0);
+}
+
+100% {
+bottom: .5rem;
+transform: rotate(135deg);
+}
+}
+
+@keyframes menu-icon-bottom-2 {
+0% {
+bottom: .5rem;
+transform: rotate(135deg);
+}
+
+50% {
+bottom: .5rem;
+transform: rotate(0);
+}
+
+100% {
+bottom: 0;
+transform: rotate(0);
+}
+}
+
+@keyframes menu-icon-scaled {
+50% {
+transform: scale(0);
+}
+
+100% {
+transform: scale(0);
+}
+}
+
+@keyframes menu-icon-scaled-2 {
+0% {
+transform: scale(0);
+}
+
+50% {
+transform: scale(0);
+}
+
+100% {
+transform: scale(1);
+}
+}
+
+
+

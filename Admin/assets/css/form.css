@@ -1,0 +1,146 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 65%;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    background: #e3e3db!important;
+    color: #000000;
+    margin: auto;
+    margin-top: 10px;
+    border: 1px solid #333;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    color: #000000;
+}
+
+.title::before {
+    width: 8px;
+    height: 18px;
+}
+
+.title::after {
+    width: 18px;
+    height: 18px;
+    animation: pulse 1s linear infinite;
+}
+
+.title::before,
+.title::after {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 0px;
+}
+
+.message,
+.signin {
+    font-size: 14.5px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.signin {
+    text-align: center;
+}
+
+.signin a:hover {
+    text-decoration: underline rgb(0, 0, 0);
+}
+
+.signin a {
+    color: #ffffff;
+}
+.success-message {
+    width: 60%;
+    margin: 10px auto;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+}
+
+.form label {
+    position: relative;
+}
+.form label {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 20px; /* Adjust spacing between each label and input */
+}
+
+
+.form label .input {
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+    width: 100%; /* Ensure input fields take full width */
+}
+
+.form label .input + span {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9em;
+    cursor: text;
+    transition: all 0.3s ease;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+}
+
+.form label .input:focus + span,
+.form label .input:not(:placeholder-shown) + span {
+    top: 5px;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+.input {
+    font-size: small;
+}
+
+.submit {
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: #baacac;
+    font-size: 15px;
+    transform: .3s ease;
+    background-color: #333;
+    margin-right: 30px;
+}
+
+.submit:hover {
+    background-color: #333;
+    color: #fff;
+    border: solid 2px #ffffff;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(0.9);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
