@@ -127,8 +127,6 @@
         
     </head>
     <body>
-
-        
         <div class="script-container">
         <script>
             
@@ -159,7 +157,6 @@
               if (low) return Math.floor(Math.random()*Math.random()*(max-min))+min;
               else return Math.floor(Math.random()*(max-min))+min;
             }
-            
             function Color() {
               const CBASE=144;
               const CT=255-CBASE;
@@ -319,20 +316,26 @@
             AOS.init();
      </script>
 
+        <?php
+        $sql = "SELECT header_nickname FROM achievements WHERE category = 'header'";
+        $stmt = $conn->query($sql);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $headerNickname = $row['header_nickname'] ?? '';
 
-<?php
-$sql = "SELECT header_nickname FROM achievements WHERE category = 'header'";
-$stmt = $conn->query($sql);
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-$headerNickname = $row['header_nickname'] ?? '';
+        ?>
 
-?>
+        <div class="container-fluid main-content">
+            <h1 class="intro-text" data-aos="zoom-in" delay="200"><?php echo $headerNickname; ?></h1>
+        </div>
+        <style>
+          .intro-text{
+            background-color: rgba(555, 855, 255, 0.7);
+            width: 25%;
+            border-top-left-radius: 9rem;
+            border-bottom-right-radius: 9rem;
+        }
+        </style>
 
-<div class="container-fluid main-content">
-    <h1 class="intro-text" data-aos="zoom-in" delay="200"><?php echo $headerNickname; ?></h1>
-</div>
-
-        
              <div id="animated-background"></div>
         </div>
 
@@ -350,22 +353,18 @@ $headerNickname = $row['header_nickname'] ?? '';
             });
          
       </script>
-        
-        <div class="project-title" id="project-title" data-aos="fade-right" delay="600">
-                <h1>My<br> Achievements</h1>
-            </div>
-        <div class="project-container" data-aos="zoom-in" delay="200">
+      <div class="project-title" id="project-title" data-aos="fade-right" delay="600">
+    <h1>My<br> Achievements</h1>
+</div>
+<div class="project-container" data-aos="zoom-in" delay="200">
     <div id="carousel">
-  <?php
-        // Fetch data from the database for achievements with images
+        <?php
         $sql = "SELECT A_title, A_image FROM achievements WHERE A_image IS NOT NULL AND A_image <> ''";
         $stmt = $conn->query($sql);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            // Define the image filename without the path
             $imageFilename = $row['A_image'];
             echo '<figure>';
-            // Set the image source to "../admin/uploads/" concatenated with the filename
-            echo '<img src="admin/' . $imageFilename . '" alt="' . $row['A_title'] . '">';
+            echo '<img src="admin/' . $imageFilename . '" alt="' . $row['A_title'] . '" class="achievement-image">';
             echo '<figcaption>' . $row['A_title'] . '</figcaption>';
             echo '</figure>';
         }
@@ -373,10 +372,137 @@ $headerNickname = $row['header_nickname'] ?? '';
     </div>
 </div>
 
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImg">
+</div>
+
+<script>
+var modal = document.getElementById("myModal");
+
+var images = document.querySelectorAll(".achievement-image");
+var modalImg = document.getElementById("modalImg");
+var captionText = document.getElementById("caption");
+images.forEach(function(image) {
+    image.onclick = function() {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+    }
+});
+
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+</script>
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        height: auto;
+    }
+}
+
+
+    .visit-project-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #007bff; 
+        text-decoration: none;
+        font-weight: bold;
+        position: relative;
+    }
+
+    .visit-project-link svg {
+        position: absolute;
+        left: -20px; 
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px; 
+        fill: currentColor;
+    }
+</style>
+
+<?php
+
+$sql = "SELECT * FROM gallery";
+$stmt = $conn->query($sql);
+$gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<div id="Hbtitle" class="Hbtitle">
+    <p data-aos="zoom-in-up" data-aos-delay="500">PROJECTS AND WORKS</p>
+</div>
+<section class="game-section">
+    <h2 class="line-title" data-aos="fade-left" data-aos-delay="500">Dive into my projects & creations</h2>
+    <div class="owl-carousel custom-carousel owl-theme" data-aos="zoom-in-up" data-aos-delay="500">
+        <?php foreach ($gallery_items as $item) : ?>
+            <div class="item" style="background-image: url(admin/<?php echo $item['gallery_image']; ?>);">
+                <div class="item-desc">
+                    <h3><?php echo $item['gallery_title']; ?></h3>
+                    <p><?php echo $item['gallery_description']; ?></p>
+                    <?php if (!empty($item['gallery_link'])) : ?>
+                        <a href="<?php echo $item['gallery_link']; ?>" class="visit-project-link" target="_blank">
+                           VISIT PROJECT
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+
 <div class="container-fluid services-content">
     <div class="row text-center">
         <?php
-        // Fetch data from the database for achievements with intro details
         $sql = "SELECT intro_title, intro_role, intro_description FROM achievements WHERE intro_title IS NOT NULL AND intro_title <> '' AND intro_role IS NOT NULL AND intro_role <> '' AND intro_description IS NOT NULL AND intro_description <> ''";
         $stmt = $conn->query($sql);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -389,17 +515,14 @@ $headerNickname = $row['header_nickname'] ?? '';
         ?>
     </div>
 </div>
-
-                            
                     
 <section id="aboutcute">
     <?php
-    // Fetch about data from the database
     $sql = "SELECT * FROM about";
     $stmt = $conn->query($sql);
-    $count = 0; // Variable to track the iteration count
+    $count = 0; 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $count++; // Increment the count for each iteration
+        $count++; 
         ?>
         <div class="container-fluid container-about">
             <div class="row about-me">
@@ -437,7 +560,6 @@ $headerNickname = $row['header_nickname'] ?? '';
         <div class="splide__track">
             <ul class="splide__list">
                 <?php
-                // Fetch skills data from the database
                 $sql = "SELECT * FROM skills";
                 $stmt = $conn->query($sql);
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -464,7 +586,6 @@ $headerNickname = $row['header_nickname'] ?? '';
         }).mount();
     });
 </script>
-
 
 <style>
                 .splide__pagination__page{
@@ -543,6 +664,23 @@ $headerNickname = $row['header_nickname'] ?? '';
     </div>
 </div>
 
+<?php
+    include ('./includes/connection.php');
+
+    $sql = "SELECT * FROM cv LIMIT 1";
+    $stmt = $conn->query($sql);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row) {
+        echo '<div class="button-div">';
+        echo '<a href="./admin/uploads/' . $row['cv_file'] . '" download>';
+        echo '<button class="cv">Download My CV</button>';
+        echo '</a>';
+        echo '</div>';
+    } else {
+        echo '<p>No CV file found.</p>';
+    }
+?>
           
                 <!-- <div id="technical" class="technical">
                     <div class="vertical-text" data-aos="zoom-in-up" data-aos-delay="500" >TECHNICAL SKILLS</div>
@@ -575,34 +713,10 @@ $headerNickname = $row['header_nickname'] ?? '';
                         font-size: 50px;
                         margin-top: 250px;
                     }
+                    .contact{
+                        margin-top: 150px;
+                    }
                 </style>
-
-
-<?php
-
-// Fetch gallery items from the database
-$sql = "SELECT * FROM gallery";
-$stmt = $conn->query($sql);
-$gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
-<div id="Hbtitle" class="Hbtitle">
-    <p data-aos="zoom-in-up" data-aos-delay="500">PROJECTS AND HOBBIES</p>
-</div>
-<section class="game-section">
-    <h2 class="line-title" data-aos="fade-left" data-aos-delay="500">DRAG AND VIEW</h2>
-    <div class="owl-carousel custom-carousel owl-theme" data-aos="zoom-in-up" data-aos-delay="500">
-        <?php foreach ($gallery_items as $item) : ?>
-            <div class="item" style="background-image: url(admin/<?php echo $item['gallery_image']; ?>);">
-                <div class="item-desc">
-                    <h3><?php echo $item['gallery_title']; ?></h3>
-                    <p><?php echo $item['gallery_description']; ?></p>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-</section>
-
          
 
 <?php include('contact.php'); ?>
@@ -613,7 +727,7 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="card" data-aos="zoom-in-up" data-aos-delay="500">
         <div class="container-fluid work-with-me-container">
         <?php if ($contact_info && isset($contact_info['email'])): ?>
-                <h5>Want to work with me? Send me a mail <a class="email" href="mailto:<?php echo $contact_info['email']; ?>"><?php echo $contact_info['email']; ?></a></h5>
+                <h5>Want to work with me? Send me a mail</a></h5>
             <?php else: ?>
                 <h5>No contact information available. Please check back later.</h5>
             <?php endif; ?>
@@ -708,7 +822,6 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-        
         <footer>
     
         </footer>
@@ -756,10 +869,10 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $(".custom-carousel").owlCarousel({
                 autoWidth: true,
                 loop: true,
-                autoplay: true, // Enable autoplay
-                autoplayTimeout: 5000, // Set autoplay timeout in milliseconds (e.g., 5 seconds)
-                autoplaySpeed: 1000, // Set autoplay speed in milliseconds (e.g., 1 second)
-                rewind: true, // Enable rewind to the beginning when reaching the end
+                autoplay: true, 
+                autoplayTimeout: 5000, 
+                autoplaySpeed: 1000, 
+                rewind: true,
             });
         
             $(".custom-carousel .item").click(function () {
@@ -842,12 +955,12 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <style>
     .vertical-text {
-         writing-mode: vertical-rl; /* vertical writing mode */
-         text-orientation: mixed; /* upright text orientation */
-         transform: rotate(180deg); /* rotate the text */
-         font-size: 24px; /* adjust font size as needed */
-         font-weight: bold; /* optional: adjust font weight */
-         margin: 20px 0; /* optional: adjust margin */
+         writing-mode: vertical-rl; 
+         text-orientation: mixed;
+         transform: rotate(180deg); 
+         font-size: 24px; 
+         font-weight: bold; 
+         margin: 20px 0;
          text-align: center;
          font-optical-sizing: auto;
          font-family: "ultra", serif;
@@ -861,10 +974,10 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
          margin-top: 50px;
      }
      .empty-row {
-         width: 35%; /* Adjust the width of the empty columns */
-         height: 100%; /* Adjust the height of the empty columns */
+         width: 35%;
+         height: 100%; 
          margin: auto;
-         border: 5px solid black; /* Optional: Add border for better visibility */
+         border: 5px solid black;
      }
      .technical {
          display: flex;
@@ -872,12 +985,12 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
          align-items: center;
       }
       .opposite-vertical-text{
-         writing-mode: vertical-rl; /* vertical writing mode */
-         text-orientation: mixed; /* upright text orientation */
-         transform: rotate(360deg); /* rotate the text */
-         font-size: 24px; /* adjust font size as needed */
-         font-weight: bold; /* optional: adjust font weight */
-         margin: 20px 0; /* optional: adjust margin */
+         writing-mode: vertical-rl; 
+         text-orientation: mixed;
+         transform: rotate(360deg); 
+         font-size: 24px;
+         font-weight: bold; 
+         margin: 20px 0; 
          text-align: center;
          font-optical-sizing: auto;
          font-family: "ultra", serif;
@@ -922,7 +1035,7 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     }
             
                     .instagram:hover .instagram-icon {
-                        background: #ff5ddc; /* Background color on hover */
+                        background: #ff5ddc; 
                     }
                     .socials ul li {
                         list-style:none;
@@ -1025,7 +1138,8 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         background: #dd4b39;
                     }
                 </style>
-<style>
+                    <style>
+                
                 .contact h1 {
                     font-family: "Rubik Lines", system-ui;
                     font-weight: 200;
@@ -1102,6 +1216,23 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     transition: 0.5s ease-in-out;
                     cursor: pointer
                     }
+                    .cv {
+                    margin-top: 3rem;
+                    text-align: center;
+                    padding: 10px 3rem;
+                    border: none;
+                    width: 20%;
+                    border-top-left-radius: 3rem;
+                    border-bottom-right-radius: 3rem;
+                    background-color: black;
+                    color: white;
+                    transition: 0.5s ease-in-out;
+                    cursor: pointer
+                    }
+                    .cv:hover {
+                    box-shadow: rgba(44, 43, 43, 0.664) 5px 5px, rgba(45, 45, 45, 0.3) 10px 10px, rgba(60, 59, 59, 0.2) 15px 15px, rgba(54, 53, 53, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+                    }
+
 
                     .submit:hover {
                     box-shadow: rgba(44, 43, 43, 0.664) 5px 5px, rgba(45, 45, 45, 0.3) 10px 10px, rgba(60, 59, 59, 0.2) 15px 15px, rgba(54, 53, 53, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;

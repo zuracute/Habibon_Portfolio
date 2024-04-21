@@ -35,12 +35,13 @@
                     <th>Image</th>
                     <th>Title</th>
                     <th>Description</th>
+                    <th>Links</th>
+                    <th>Action</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Fetch data from the gallery table
                 $sql = "SELECT * FROM gallery";
                 $stmt = $conn->query($sql);
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -48,10 +49,13 @@
                     echo '<td><img src="' . $row['gallery_image'] . '" alt="Gallery Image" style="max-width: 100px;"></td>';
                     echo '<td>' . htmlspecialchars($row['gallery_title']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['gallery_description']) . '</td>';
+                      echo '<td>' . htmlspecialchars($row['gallery_link']) . '</td>';
                     echo '<td>
                             <a href="edit_gallery.php?id=' . $row['id'] . '" class="btn btn-primary edit-btn">Edit</a>
-                            <button type="button" class="btn btn-danger delete-btn" data-id="' . $row['id'] . '">Delete</button>
                           </td>';
+                          echo '<td>
+                          <button type="button" class="btn btn-danger delete-btn" data-id="' . $row['id'] . '">Delete</button>
+                        </td>';
                     echo '</tr>';
                 }
                 ?>

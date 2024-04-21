@@ -78,7 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     showConfirmButton: false,
                     timer: 3000
                 }).then(() => {
-                    window.location.href = 'dashboard.php';
+                    window.location.href = 'Achievements.php';
                 });
              </script>";
     }

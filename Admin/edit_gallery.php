@@ -32,12 +32,16 @@ if(isset($_GET['id']) && !empty($_GET['id'])) {
 
                     <div class="form-group">
                         <label for="gallery_title">Title</label>
-                        <input class="form-control" type="text" name="gallery_title" id="gallery_title" value="<?php echo $gallery_item['gallery_title']; ?>" required="">
+                        <input class="form-control" type="text" name="gallery_title" id="gallery_title" value="<?php echo $gallery_item['gallery_title']; ?>">
                     </div>
 
                     <div class="form-group">
                         <label for="gallery_description">Description</label>
-                        <textarea class="form-control" name="gallery_description" id="gallery_description" rows="3" required=""><?php echo $gallery_item['gallery_description']; ?></textarea>
+                        <textarea class="form-control" name="gallery_description" id="gallery_description" rows="3"><?php echo $gallery_item['gallery_description']; ?></textarea>
+                    </div>
+                      <div class="form-group">
+                      <label for="gallery_link">Link</label>
+                        <textarea class="form-control" name="gallery_link" id="gallery_link" rows="3"><?php echo $gallery_item['gallery_link']; ?></textarea>
                     </div>
 
                     <div class="form-group">
@@ -72,28 +76,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
     $gallery_title = isset($_POST['gallery_title']) ? $_POST['gallery_title'] : "";
     $gallery_description = isset($_POST['gallery_description']) ? $_POST['gallery_description'] : "";
+    $gallery_link = isset($_POST['gallery_link']) ? $_POST['gallery_link'] : "";
 
     // Check if image file is selected
     if (isset($_FILES["gallery_image"]) && !empty($_FILES["gallery_image"]["name"])) {
         $targetDir = "../admin/uploads/";
         $targetFile = $targetDir . basename($_FILES["gallery_image"]["name"]);
 
-        // Move uploaded file to the target directory
         if (move_uploaded_file($_FILES["gallery_image"]["tmp_name"], $targetFile)) {
-            // Update image path in the database
-            $sql = "UPDATE gallery SET gallery_image = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            if ($stmt) {
-                $stmt->execute([$targetFile, $id]);
+            if (file_exists($targetFile)) {
+                $sql = "UPDATE gallery SET gallery_image = ? WHERE id = ?";
+                $stmt = $conn->prepare($sql);
+                if ($stmt) {
+                    $stmt->execute([$targetFile, $id]);
+                }
+            } else {
+                echo '<div class="alert alert-danger mt-3" role="alert">Error: Failed to move uploaded file.</div>';
             }
         }
-    }
+    }        
 
-    $sql = "UPDATE gallery SET gallery_title = ?, gallery_description = ? WHERE id = ?";
+    $sql = "UPDATE gallery SET gallery_title = ?, gallery_description = ?, gallery_link = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
     if ($stmt) {
-        $stmt->execute([$gallery_title, $gallery_description, $id]);
-        header("Location: edit_gallery.php?id=$id");
+        $stmt->execute([$gallery_title, $gallery_description, $gallery_link, $id]);
+        header("Location: gallery.php?id=$id");
         exit();
     } else {
         echo '<div class="alert alert-danger mt-3" role="alert">Error: Failed to prepare SQL statement for update.</div>';

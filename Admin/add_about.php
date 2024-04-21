@@ -3,22 +3,19 @@ include ('../includes/connection.php');
 include ('../includes/header.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle form submission
+
     $about_title = $_POST['about_title'];
     $about_description = $_POST['about_description'];
     $about_role = $_POST['about_role'];
 
-    // Upload image
     $targetDir = "../admin/uploads/";
     $targetFile = $targetDir . basename($_FILES["about_image"]["name"]);
     move_uploaded_file($_FILES["about_image"]["tmp_name"], $targetFile);
 
-    // Insert into database
     $sql = "INSERT INTO about (about_image, about_title, about_role, about_description) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$targetFile, $about_title, $about_role, $about_description]);
 
-    // Show success message
     echo '<div class="alert alert-success mt-3" role="alert" style="width: 50%; margin: auto;">About item added successfully!</div>';
 }
 ?>

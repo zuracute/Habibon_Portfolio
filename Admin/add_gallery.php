@@ -3,34 +3,28 @@ include('../includes/connection.php');
 include('../includes/header.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle form submission
     $gallery_title = isset($_POST['gallery_title']) ? $_POST['gallery_title'] : "";
     $gallery_description = isset($_POST['gallery_description']) ? $_POST['gallery_description'] : "";
+    $gallery_link = isset($_POST['gallery_link']) ? $_POST['gallery_link'] : "";
 
-    // Check if image file is selected
     if (isset($_FILES["gallery_image"])) {
         $targetDir = "../admin/uploads/";
         $targetFile = $targetDir . basename($_FILES["gallery_image"]["name"]);
 
-        // Move uploaded file to the target directory
         if (move_uploaded_file($_FILES["gallery_image"]["tmp_name"], $targetFile)) {
-            // Insert into database
-            $sql = "INSERT INTO gallery (gallery_image, gallery_title, gallery_description) VALUES (?, ?, ?)";
+
+            $sql = "INSERT INTO gallery (gallery_image, gallery_title, gallery_description, gallery_link) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             if ($stmt) {
-                $stmt->execute([$targetFile, $gallery_title, $gallery_description]);
-                // Show success message
+                $stmt->execute([$targetFile, $gallery_title, $gallery_description, $gallery_link]);
                 echo '<div class="alert alert-success mt-3" role="alert" style="width: 50%; margin: auto;">Gallery updated successfully!</div>';
             } else {
-                // Handle SQL statement preparation error
                 echo '<div class="success-message mt-3" role="alert" style="width: 50%; margin: auto;">Error: Failed to prepare SQL statement.</div>';
             }
         } else {
-            // Handle file upload error
             echo '<div class="success-message mt-3" role="alert" style="width: 50%; margin: auto;">Error: Failed to upload file.</div>';
         }
     } else {
-        // Handle missing file upload
         echo '<div class="success-message mt-3" role="alert" style="width: 50%; margin: auto;">Error: No file uploaded.</div>';
     }
 }
@@ -64,12 +58,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="gallery_image">Image</label>
             <input class="form-control" type="file" name="gallery_image" id="gallery_image" required="">
         </div>
+         <div class="form-group">
+            <label for="gallery_link">Projects/Works Links</label>
+            <input class="form-control" type="url" name="gallery_link" id="gallery_link">
+        </div>
 
         <button class="btn btn-primary mt-3" type="submit">ADD</button>
     </form>
 </div>
 
 <?php include('../includes/footer.php'); ?>
+<script>
+    setTimeout(function() {
+        var alert = document.querySelector('.alert');
+        if (alert) {
+            alert.remove();
+        }
+    }, 3000);
+</script>
 
 
 <script>

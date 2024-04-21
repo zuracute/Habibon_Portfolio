@@ -1,8 +1,6 @@
 <?php
-// Include database connection
 include('../includes/connection.php');
 
-// Check if ID parameter is set
 if(isset($_POST['id'])) {
     $id = $_POST['id'];
 
